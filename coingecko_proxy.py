@@ -33,16 +33,6 @@ def fetch_cached(url):
         return {"error": str(e)}
 
 # --- Proxy routes ---
-@app.get("/proxy/market_chart")
-def market_chart(days: int = 90):
-    url = f"https://api.coingecko.com/api/v3/coins/ethereum/market_chart?vs_currency=usd&days={days}"
-    return fetch_cached(url)
-
-@app.get("/proxy/ohlc")
-def ohlc(days: int = 90):
-    url = f"https://api.coingecko.com/api/v3/coins/ethereum/ohlc?vs_currency=usd&days={days}"
-    return fetch_cached(url)
-
 @app.get("/proxy/metadata")
 def metadata():
     url = "https://api.coingecko.com/api/v3/coins/ethereum"
@@ -53,6 +43,16 @@ def live_market():
     url = ("https://api.coingecko.com/api/v3/simple/price"
            "?ids=ethereum&vs_currencies=usd&include_market_cap=true"
            "&include_24hr_vol=true&include_24hr_change=true")
+    return fetch_cached(url)
+
+@app.get("/proxy/ohlc")
+def ohlc(days: int = 90):
+    url = f"https://api.coingecko.com/api/v3/coins/ethereum/ohlc?vs_currency=usd&days={days}"
+    return fetch_cached(url)
+
+@app.get("/proxy/market_chart")
+def market_chart(days: int = 90):
+    url = f"https://api.coingecko.com/api/v3/coins/ethereum/market_chart?vs_currency=usd&days={days}"
     return fetch_cached(url)
 
 @app.get("/")
